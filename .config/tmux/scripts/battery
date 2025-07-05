@@ -1,0 +1,15 @@
+percent=$(cat /sys/class/power_supply/BAT0/capacity)
+
+if (( $percent > 90 )); then
+    icon="󰁹"
+elif (( $percent > 60 )); then
+    icon="󰂁"
+elif (( $percent > 30 )); then
+    icon="󰁾"
+else
+    icon="#[fg=#{@col_bad},bold]󰁺"
+fi
+
+widget="${icon}$percent%"
+
+echo "$widget"

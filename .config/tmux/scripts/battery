@@ -1,15 +1,29 @@
-percent=$(cat /sys/class/power_supply/BAT0/capacity)
+iconset[0]="󰂎"
+iconset[10]="󰁺"
+iconset[20]="󰁻"
+iconset[30]="󰁼"
+iconset[40]="󰁽"
+iconset[50]="󰁾"
+iconset[60]="󰁿"
+iconset[70]="󰂀"
+iconset[80]="󰂁"
+iconset[90]="󰂂"
+iconset[100]="󰁹"
 
-if (( $percent > 90 )); then
-    icon="󰁹"
-elif (( $percent > 60 )); then
-    icon="󰂁"
-elif (( $percent > 30 )); then
-    icon="󰁾"
-else
-    icon="#[fg=#{@col_bad},bold]󰁺"
+get_percentage() {
+  # TODO: generalize this to work on other systems
+  cat /sys/class/power_supply/BAT0/capacity
+}
+
+percent=${1:-$(get_percentage)}
+
+icon=${iconset[$(( ${percent} / 10 * 10 ))]}
+
+if [ "$percent" -lt 20 ]; then
+  icon="#[fg=#{@col_bad}]$icon#[fg=default]"
+  icon="#[push-default]$icon#[pop-default]"
 fi
 
-widget="${icon}$percent%"
+echo "${icon} ${percent}%"
 
-echo "$widget"
+# vim: set ft=sh:

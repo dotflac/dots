@@ -1,0 +1,26 @@
+body="${1}"
+
+reverse () {
+  body="#[reverse]${body}#[noreverse]"
+}
+
+pill () {
+  body="#{@pill_L}${body}#{@pill_R}"
+}
+
+fg () {
+  color="${1}"
+  body="#[fg=#{@col_${color}}]${body}#[fg=default]"
+}
+
+bg () {
+  color="${1}"
+  body="#[bg=#{@col_${color}}]${body}#[bg=default]"
+}
+
+reverse
+pill
+
+echo "${body}"
+
+# vim: set ft=sh:

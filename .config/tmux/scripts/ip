@@ -1,0 +1,4 @@
+ip=$(curl -4s https://ifconfig.co)
+echo "$ip"
+
+# vim: set ft=sh:
